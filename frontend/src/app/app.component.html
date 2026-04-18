@@ -1,0 +1,123 @@
+<div class="app">
+
+  <!-- Setup screen -->
+  <div *ngIf="!playerId" class="setup-screen">
+    <div class="setup-card">
+      <div class="logo">✈️</div>
+      <h1>Idlemania</h1>
+      <p class="tagline">Build your airport empire</p>
+      <div *ngIf="error" class="error-msg">{{ error }}</div>
+      <input
+        [(ngModel)]="playerName"
+        placeholder="Enter your name"
+        class="name-input"
+        (keyup.enter)="createPlayer()"
+        maxlength="30"
+      />
+      <button class="btn-primary" (click)="createPlayer()" [disabled]="!playerName.trim()">
+        Start Game
+      </button>
+    </div>
+  </div>
+
+  <!-- Game screen -->
+  <div *ngIf="playerId && gameState" class="game-screen">
+
+    <header class="game-header">
+      <div class="header-left">
+        <span class="logo-small">✈️</span>
+        <span class="player-name">{{ gameState.playerName }}'s Airport</span>
+      </div>
+      <div class="header-stats">
+        <div class="coins-display">
+          <span class="coins-label">Coins</span>
+          <span class="coins-value">{{ gameState.coins | number:'1.0-2' }}</span>
+        </div>
+        <div class="ips-display">
+          <span class="ips-value">+{{ gameState.incomePerSecond | number:'1.0-3' }}/s</span>
+        </div>
+      </div>
+      <button class="btn-reset" (click)="resetPlayer()" title="New game">New Game</button>
+    </header>
+
+    <div class="game-body">
+
+      <!-- Click area -->
+      <section class="click-section">
+        <button class="click-btn" (click)="collectCoins()">
+          <span class="click-icon">🛫</span>
+          <span class="click-label">Dispatch Flight</span>
+          <span class="click-sub">+1 coin</span>
+        </button>
+        <p class="total-earned">Total earned: {{ gameState.totalCoinsEarned | number:'1.0-0' }}</p>
+      </section>
+
+      <div class="panels">
+
+        <!-- Generators -->
+        <section class="panel">
+          <h2>Generators</h2>
+          <div class="card-list">
+            <div *ngFor="let gen of gameState.generators" class="card" [class.card-owned]="gen.count > 0">
+              <div class="card-icon">
+                {{ gen.type === 'BAGGAGE_CART' ? '🧳' : gen.type === 'GATE_DESK' ? '🎫' : '✈️' }}
+              </div>
+              <div class="card-info">
+                <div class="card-name">{{ gen.displayName }}</div>
+                <div class="card-stats">
+                  <span class="owned">Owned: {{ gen.count }}</span>
+                  <span class="ips">{{ gen.incomePerSecond | number:'1.0-3' }}/s</span>
+                </div>
+              </div>
+              <button
+                class="btn-buy"
+                (click)="buyGenerator(gen.type)"
+                [disabled]="gameState.coins < gen.nextCost">
+                <span class="cost">{{ gen.nextCost | number:'1.0-0' }}</span>
+                <span class="cost-label">coins</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Upgrades -->
+        <section class="panel">
+          <h2>Upgrades</h2>
+          <div class="card-list">
+            <div *ngFor="let upg of gameState.upgrades" class="card" [class.card-purchased]="upg.purchased">
+              <div class="card-icon">
+                {{ upg.purchased ? '✅' : '⬆️' }}
+              </div>
+              <div class="card-info">
+                <div class="card-name">{{ upg.displayName }}</div>
+                <div class="card-stats">
+                  <span class="ips">{{ upg.multiplier }}x {{ upg.targetGenerator | titlecase }}</span>
+                </div>
+              </div>
+              <div *ngIf="upg.purchased" class="purchased-badge">Purchased</div>
+              <button
+                *ngIf="!upg.purchased"
+                class="btn-buy"
+                (click)="buyUpgrade(upg.type)"
+                [disabled]="gameState.coins < upg.cost">
+                <span class="cost">{{ upg.cost | number:'1.0-0' }}</span>
+                <span class="cost-label">coins</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <div *ngIf="error" class="error-bar">{{ error }}</div>
+
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="playerId && !gameState" class="loading">
+    <div class="spinner">✈️</div>
+    <p>Loading your airport...</p>
+  </div>
+
+</div>
