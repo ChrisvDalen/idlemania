@@ -3,9 +3,8 @@ package com.idlemania.controller;
 import com.idlemania.dto.BuyGeneratorRequest;
 import com.idlemania.dto.BuyUpgradeRequest;
 import com.idlemania.dto.GameStateResponse;
-import com.idlemania.model.GeneratorType;
-import com.idlemania.model.UpgradeType;
 import com.idlemania.service.GameService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -33,14 +32,14 @@ public class GameController {
     @PostMapping("/{playerId}/buy/generator")
     public GameStateResponse buyGenerator(
             @PathVariable UUID playerId,
-            @RequestBody BuyGeneratorRequest request) {
-        return gameService.buyGenerator(playerId, GeneratorType.valueOf(request.generatorType()));
+            @Valid @RequestBody BuyGeneratorRequest request) {
+        return gameService.buyGenerator(playerId, request.generatorType());
     }
 
     @PostMapping("/{playerId}/buy/upgrade")
     public GameStateResponse buyUpgrade(
             @PathVariable UUID playerId,
-            @RequestBody BuyUpgradeRequest request) {
-        return gameService.buyUpgrade(playerId, UpgradeType.valueOf(request.upgradeType()));
+            @Valid @RequestBody BuyUpgradeRequest request) {
+        return gameService.buyUpgrade(playerId, request.upgradeType());
     }
 }

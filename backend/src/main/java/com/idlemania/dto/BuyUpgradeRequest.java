@@ -1,4 +1,7 @@
 package com.idlemania.dto;
 
-public record BuyUpgradeRequest(String upgradeType) {
+import com.idlemania.model.UpgradeType;
+import jakarta.validation.constraints.NotNull;
+
+public record BuyUpgradeRequest(@NotNull UpgradeType upgradeType) {
 }
