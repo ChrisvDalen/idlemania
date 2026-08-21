@@ -1,8 +1,6 @@
 package com.idlemania.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
@@ -10,8 +8,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "players")
-@Getter
-@Setter
 public class Player {
 
     @Id
@@ -25,4 +21,20 @@ public class Player {
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 }

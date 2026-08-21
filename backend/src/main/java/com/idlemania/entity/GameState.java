@@ -1,8 +1,6 @@
 package com.idlemania.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
@@ -12,8 +10,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "game_states")
-@Getter
-@Setter
 public class GameState {
 
     @Id
@@ -40,4 +36,48 @@ public class GameState {
 
     @OneToMany(mappedBy = "gameState", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<UpgradeState> upgrades = new ArrayList<>();
+
+    public UUID getId() {
+        return id;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public double getCoins() {
+        return coins;
+    }
+
+    public void setCoins(double coins) {
+        this.coins = coins;
+    }
+
+    public double getTotalCoinsEarned() {
+        return totalCoinsEarned;
+    }
+
+    public void setTotalCoinsEarned(double totalCoinsEarned) {
+        this.totalCoinsEarned = totalCoinsEarned;
+    }
+
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public List<GeneratorState> getGenerators() {
+        return generators;
+    }
+
+    public List<UpgradeState> getUpgrades() {
+        return upgrades;
+    }
 }

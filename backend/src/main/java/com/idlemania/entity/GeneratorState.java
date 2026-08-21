@@ -2,16 +2,12 @@ package com.idlemania.entity;
 
 import com.idlemania.model.GeneratorType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "generator_states")
-@Getter
-@Setter
 public class GeneratorState {
 
     @Id
@@ -30,4 +26,32 @@ public class GeneratorState {
 
     @Column(nullable = false)
     private int count = 0;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public GeneratorType getType() {
+        return type;
+    }
+
+    public void setType(GeneratorType type) {
+        this.type = type;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }
