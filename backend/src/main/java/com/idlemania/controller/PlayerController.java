@@ -3,6 +3,7 @@ package com.idlemania.controller;
 import com.idlemania.dto.CreatePlayerRequest;
 import com.idlemania.dto.PlayerResponse;
 import com.idlemania.service.GameService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class PlayerController {
     }
 
     @PostMapping
-    public ResponseEntity<PlayerResponse> createPlayer(@RequestBody CreatePlayerRequest request) {
+    public ResponseEntity<PlayerResponse> createPlayer(@Valid @RequestBody CreatePlayerRequest request) {
         return ResponseEntity.ok(gameService.createPlayer(request.name()));
     }
 }

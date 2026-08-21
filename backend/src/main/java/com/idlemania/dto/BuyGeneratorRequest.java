@@ -1,4 +1,7 @@
 package com.idlemania.dto;
 
-public record BuyGeneratorRequest(String generatorType) {
+import com.idlemania.model.GeneratorType;
+import jakarta.validation.constraints.NotNull;
+
+public record BuyGeneratorRequest(@NotNull GeneratorType generatorType) {
 }
