@@ -1,8 +1,11 @@
-import { bootstrapApplication } from "@angular/platform-browser";
-import { provideHttpClient, withXhr } from "@angular/common/http";
-import { provideZonelessChangeDetection } from "@angular/core";
-import { AppComponent } from "./app/app.component";
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideHttpClient, withXhr } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, {
-  providers: [provideZonelessChangeDetection(), provideHttpClient(withXhr())],
-}).catch((err) => console.error(err));
+  providers: [
+    provideZonelessChangeDetection(),
+    provideHttpClient(withXhr())
+  ]
+}).catch(err => console.error(err));
